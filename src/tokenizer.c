@@ -92,16 +92,24 @@ char *copy_str(char *inStr, short len) {
      tokens[3] = 0
 */
 char **tokenize(char* str) {
-  int i = 0;
-  // start of token
-  while (*p != '\0') {
-
+  int token_count = count_tokens(str);
+  char **token_vector = malloc(sizeof(char*) * (token_count + 1));
+  for (int i = 0; i < token_count; i++) {
+    char *start  = token_start(str);
+    char *end = token_terminator(str);
+    int length = end - str;
+    token_vector[i] = copy_str(start, length);
+    start = token_start(end+1);
   }
+  return token_vector;
 }
 
 /* Prints all the tokens. */
 void print_tokens(char **tokens) {
-  
+  int i = 0;
+  while (tokens[i] != NULL) {
+    printf("%s\n", tokens[i]);
+  }
 }
 
 /* Frees all tokens and the vector containing them. */
